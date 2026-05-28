@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+
+body {
+   font-family: "Gruppo", sans-serif;
+}
+
+button, link {
+  cursor: pointer;
+}
+
+.splash-font {
+  font-family: "Indie Flower", cursive;
+}
+
+@layer utilities {
+  /* PALETA 1: FADE NEON FLUIDO E CONCENTRADO - AZUL PARA VERMELHO */
+  .text-neon-blue-red {
+    color: #ffffff;
+    --stroke: #000000;
+    
+    text-shadow:
+      /* 1. Contorno Preto Grosso e Definido */
+      -3px -3px 0 var(--stroke),  3px -3px 0 var(--stroke), -3px  3px 0 var(--stroke),  3px  3px 0 var(--stroke),
+      -3px  0px 0 var(--stroke),  3px  0px 0 var(--stroke),  0px -3px 0 var(--stroke),  0px  3px 0 var(--stroke),
+      
+      /* 2. Brilho Neon Justo (Blur reduzido e mais próximo à letra) */
+      0px 0px 4px #06b6d4,    /* Intensidade Ciano colada na borda */
+      1px 1px 8px #3b82f6,    /* Azul abraçando o contorno */
+      2px 2px 12px #a855f7,   /* Transição sutil em Roxo */
+      3px 3px 16px #ec4899,   /* Rosa mais contido */
+      4px 4px 22px #f43f5e;   /* Base Vermelha fechando o contorno */
+  }
+
+  /* PALETA 2: FADE NEON FLUIDO E CONCENTRADO - AMARELO PARA VERDE */
+  .text-neon-yellow-green {
+    color: #ffffff;
+    --stroke: #000000;
+
+    text-shadow:
+      /* 1. Contorno Preto Grosso e Definido */
+      -3px -3px 0 var(--stroke),  3px -3px 0 var(--stroke), -3px  3px 0 var(--stroke),  3px  3px 0 var(--stroke),
+      -3px  0px 0 var(--stroke),  3px  0px 0 var(--stroke),  0px -3px 0 var(--stroke),  0px  3px 0 var(--stroke),
+      
+      /* 2. Brilho Neon Justo */
+      0px 0px 4px #eab308,    /* Intensidade Amarela colada na borda */
+      1px 1px 8px #f97316,    /* Laranja abraçando o contorno */
+      2px 2px 12px #84cc16,   /* Transição sutil em Lime */
+      3px 3px 16px #22c55e,   /* Verde mais contido */
+      4px 4px 22px #10b981;   /* Base Esmeralda fechando o contorno */
+  }
+}
