@@ -1,7 +1,10 @@
 import { useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+
+import { useBreakpoint } from '../hook/use-media-query'
 
 gsap.registerPlugin(useGSAP);
 
@@ -13,7 +16,47 @@ interface ResultModalProps {
 export function ResultModal({ correct, wrong }: ResultModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
+
   const navigate = useNavigate();
+
+  // BREAKPOINTS INDIVIDUALS
+  const isMobileXS = useBreakpoint('mobileXS')
+  const isMobileSM = useBreakpoint('mobileSM')
+  const isMobileMD = useBreakpoint('mobileMD')
+  const isMobileLG = useBreakpoint('mobileLG')
+  const isMobileXL = useBreakpoint('mobileXL')
+
+  const isTabletSM = useBreakpoint('tabletSM')
+  const isTabletMD = useBreakpoint('tabletMD')
+
+  const isDesktopSM = useBreakpoint('desktopSM')
+  const isDesktopMD = useBreakpoint('desktopMD')
+  const isDesktopLG = useBreakpoint('desktopLG')
+  const isDesktopXL = useBreakpoint('desktopXL')
+  const isDesktop2XL = useBreakpoint('desktop2XL')
+
+  // GROUPS DE BREAKPOINTS
+
+  const mobileRangeFull =
+    isMobileXS ||
+    isMobileSM ||
+    isMobileMD ||
+    isMobileLG ||
+    isMobileXL
+
+  const tabletRangeFull =
+    isTabletSM ||
+    isTabletMD
+
+  const desktopRangeFull =
+    isDesktopSM ||
+    isDesktopMD ||
+    isDesktopLG ||
+    isDesktopXL ||
+    isDesktop2XL
+
+
+  const resizedViewRange = mobileRangeFull ? 'w-[90%]' : tabletRangeFull ? 'w-[60%]' : 'w-[40%]'
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -67,7 +110,11 @@ export function ResultModal({ correct, wrong }: ResultModalProps) {
     >
       <div 
         ref={modalRef}
-        className="bg-zinc-950 rounded-[2.5rem] p-10 flex flex-col items-center gap-8 min-w-[90%] sm:min-w-[32%] border-8 border-purple-600 shadow-2xl text-center select-none"
+        className={` ${resizedViewRange}
+            flex flex-col items-center gap-8
+            ${mobileRangeFull ? 'p-4' : 'p-8'}
+          bg-zinc-950 rounded-[2.5rem]
+            border-8 border-purple-600 shadow-2xl text-center select-none`}
         style={{
           filter: 'drop-shadow(0px 0px 25px rgba(147, 51, 234, 0.45))'
         }}
@@ -79,8 +126,11 @@ export function ResultModal({ correct, wrong }: ResultModalProps) {
           Resultado final
         </p>
 
-        <div className="flex gap-10 bg-zinc-900/50 p-6 rounded-3xl border-4 border-zinc-800 w-full justify-center">
- 
+        <div 
+          className={`w-full flex ${mobileRangeFull ? 'gap-3 px-1 py-3 ' : 'gap-8 py-6'} justify-center
+           bg-zinc-900/50  rounded-3xl border-4 border-zinc-800  `}
+        >
+
           <div className="score-box flex flex-col items-center">
             <span className="text-6xl font-black text-emerald-400 filter drop-shadow-[0_3px_0_rgba(0,0,0,1)]">
               {correct}
@@ -90,7 +140,7 @@ export function ResultModal({ correct, wrong }: ResultModalProps) {
             </span>
           </div>
 
-          <div className="w-1 bg-zinc-800 rounded-full h-16 self-center" />
+          <div className={`${mobileRangeFull ? 'hidden' : ''}w-1 h-16 self-center rounded-full bg-zinc-800`} />
 
           <div className="score-box flex flex-col items-center">
             <span className="text-6xl font-black text-rose-500 filter drop-shadow-[0_3px_0_rgba(0,0,0,1)]">

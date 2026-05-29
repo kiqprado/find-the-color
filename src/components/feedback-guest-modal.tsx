@@ -3,6 +3,8 @@ import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
+import { useBreakpoint } from '../hook/use-media-query';
+
 gsap.registerPlugin(useGSAP);
 
 interface FeedBackGuestModalProps {
@@ -15,6 +17,45 @@ export function FeedBackGuestModal({ feedback, onNext }: FeedBackGuestModalProps
   const overlayRef = useRef<HTMLDivElement>(null);
 
   const isCorrect = feedback === 'correct';
+
+  // BREAKPOINTS INDIVIDUALS
+  const isMobileXS = useBreakpoint('mobileXS')
+  const isMobileSM = useBreakpoint('mobileSM')
+  const isMobileMD = useBreakpoint('mobileMD')
+  const isMobileLG = useBreakpoint('mobileLG')
+  const isMobileXL = useBreakpoint('mobileXL')
+
+  const isTabletSM = useBreakpoint('tabletSM')
+  const isTabletMD = useBreakpoint('tabletMD')
+
+  const isDesktopSM = useBreakpoint('desktopSM')
+  const isDesktopMD = useBreakpoint('desktopMD')
+  const isDesktopLG = useBreakpoint('desktopLG')
+  const isDesktopXL = useBreakpoint('desktopXL')
+  const isDesktop2XL = useBreakpoint('desktop2XL')
+
+  // GROUPS DE BREAKPOINTS
+
+  const mobileRangeFull =
+    isMobileXS ||
+    isMobileSM ||
+    isMobileMD ||
+    isMobileLG ||
+    isMobileXL
+
+  const tabletRangeFull =
+    isTabletSM ||
+    isTabletMD
+
+  const desktopRangeFull =
+    isDesktopSM ||
+    isDesktopMD ||
+    isDesktopLG ||
+    isDesktopXL ||
+    isDesktop2XL
+
+
+  const resizedViewRange = mobileRangeFull ? 'w-[90%]' : tabletRangeFull ? 'w-[60%]' : 'w-[40%]'
 
   useGSAP(() => {
     gsap.fromTo(overlayRef.current, 
@@ -63,12 +104,13 @@ export function FeedBackGuestModal({ feedback, onNext }: FeedBackGuestModalProps
   return (
     <div 
       ref={overlayRef}
-      className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-6 backdrop-blur-sm"
+      className={`fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-6 backdrop-blur-sm`}
     >
       <div 
         ref={modalRef}
-        className={`
-          bg-zinc-950 rounded-[2.5rem] p-10 flex flex-col items-center gap-6 min-w-[90%] sm:min-w-[35%] 
+        className={`${resizedViewRange}
+          flex flex-col items-center gap-6 p-10
+          bg-zinc-950 rounded-[2.5rem]
           border-8 select-none shadow-2xl text-center
           ${isCorrect 
             ? 'border-emerald-500 shadow-emerald-500/20 text-neon-yellow-green' 

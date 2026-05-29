@@ -4,6 +4,8 @@ import { useGuessTheColor } from "../hook/use-guess-the-color"
 import { FeedBackGuestModal } from "../components/feedback-guest-modal"
 import { ResultModal } from "../components/result-modal"
 
+import { useBreakpoint } from '../hook/use-media-query'
+
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
@@ -13,6 +15,43 @@ export function GuessTheColor() {
   const { round, score, feedback, finished, answer, next } = useGuessTheColor()
 
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // BREAKPOINTS INDIVIDUALS
+  const isMobileXS = useBreakpoint('mobileXS')
+  const isMobileSM = useBreakpoint('mobileSM')
+  const isMobileMD = useBreakpoint('mobileMD')
+  const isMobileLG = useBreakpoint('mobileLG')
+  const isMobileXL = useBreakpoint('mobileXL')
+
+  const isTabletSM = useBreakpoint('tabletSM')
+  const isTabletMD = useBreakpoint('tabletMD')
+
+  const isDesktopSM = useBreakpoint('desktopSM')
+  const isDesktopMD = useBreakpoint('desktopMD')
+  const isDesktopLG = useBreakpoint('desktopLG')
+  const isDesktopXL = useBreakpoint('desktopXL')
+  const isDesktop2XL = useBreakpoint('desktop2XL')
+
+  // GROUPS DE BREAKPOINTS
+
+  const mobileRangeFull =
+    isMobileXS ||
+    isMobileSM ||
+    isMobileMD ||
+    isMobileLG ||
+    isMobileXL
+
+  const tabletRangeFull =
+    isTabletSM ||
+    isTabletMD
+
+  const desktopRangeFull =
+    isDesktopSM ||
+    isDesktopMD ||
+    isDesktopLG ||
+    isDesktopXL ||
+    isDesktop2XL
+
 
   useGSAP(() => {
     if (!round) return;
@@ -76,20 +115,25 @@ export function GuessTheColor() {
       <img
         src={country.flag}
         alt={`Bandeira de ${country.name}`}
-        className="game-flag w-[44%] h-auto 
+        className={`game-flag ${mobileRangeFull || tabletRangeFull ? 'w-[90%]' : 'w-[44%]'} h-auto 
           rounded-2xl border-4 border-black 
-          transition-transform duration-300 ease-in-out hover:scale-105"
+          transition-transform duration-300 ease-in-out hover:scale-105`}
         style={{
           filter: `drop-shadow(0px 0px 8px ${flagShadowColor})`
         }}
       />
 
-      <h1 className="game-title text-5xl text-white font-black tracking-widest uppercase">
+      <h1 
+        className={`game-title 
+        ${mobileRangeFull ? 'text-4xl' : 'text-5xl'} text-white text-center font-black tracking-widest uppercase`}>
         {country.name}
       </h1>
 
-      <p className="game-question text-zinc-300 text-xl font-bold">
-        Qual dessas cores está na bandeira?
+      <p className="game-question tracking-widest text-zinc-300 text-xl font-bold">
+        { mobileRangeFull 
+          ? 'Qual cor esta na bandeira?' 
+          : 'Qual dessas cores está na bandeira?'
+        }
       </p>
 
       <div className="flex gap-8">
