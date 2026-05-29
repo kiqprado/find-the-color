@@ -28,12 +28,6 @@ export function FeedBackGuestModal({ feedback, onNext }: FeedBackGuestModalProps
   const isTabletSM = useBreakpoint('tabletSM')
   const isTabletMD = useBreakpoint('tabletMD')
 
-  const isDesktopSM = useBreakpoint('desktopSM')
-  const isDesktopMD = useBreakpoint('desktopMD')
-  const isDesktopLG = useBreakpoint('desktopLG')
-  const isDesktopXL = useBreakpoint('desktopXL')
-  const isDesktop2XL = useBreakpoint('desktop2XL')
-
   // GROUPS DE BREAKPOINTS
 
   const mobileRangeFull =
@@ -46,13 +40,6 @@ export function FeedBackGuestModal({ feedback, onNext }: FeedBackGuestModalProps
   const tabletRangeFull =
     isTabletSM ||
     isTabletMD
-
-  const desktopRangeFull =
-    isDesktopSM ||
-    isDesktopMD ||
-    isDesktopLG ||
-    isDesktopXL ||
-    isDesktop2XL
 
 
   const resizedViewRange = mobileRangeFull ? 'w-[90%]' : tabletRangeFull ? 'w-[60%]' : 'w-[40%]'
